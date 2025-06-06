@@ -1,0 +1,128 @@
+/* Dashboard Section Background with Orange Overlay */
+.dashboard-container {
+  padding: 24px;
+  background: linear-gradient(135deg, #ff7e00, #ffa500); /* Orange gradient */
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: orange;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+.dashboard-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Reusable Card Styling */
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: var(--transition);
+  border: 2px solid white;
+  background: orange;
+}
+.dashboard{
+  background:orange;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Title */
+.dashboard-title {
+  font-weight: bold;
+  color: #ffffff; /* Changed from blue to white for overlay contrast */
+}
+
+/* Grid & Layout */
+.dashboard-grid {
+  margin-bottom: 24px;
+}
+
+.dashboard-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.dashboard-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Icons and Values */
+.icon-box {
+  margin-bottom: 8px;
+}
+
+.card-value {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+/* Charts and Efficiency */
+.chart-container {
+  height: 300px;
+}
+
+.efficiency-box {
+  display: flex;
+  align-items: center;
+}
+
+.progress-bar {
+  width: 100%;
+  margin-right: 8px;
+}
+
+.linear-progress {
+  height: 10px;
+  border-radius: 5px;
+}
+
+.efficiency-note {
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Alerts */
+.alert-item {
+  padding: 4px 0;
+}
+
+/* Icon Color Tags */
+.card-blue .icon-box {
+  color: #0d3b66;
+}
+
+.card-yellow .icon-box {
+  color: #f4d35e;
+}
+
+.card-green .icon-box {
+  color: #28a745;
+}
+
+.card-teal .icon-box {
+  color: #17a2b8;
+}
