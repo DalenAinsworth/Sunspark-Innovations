@@ -1,128 +1,137 @@
-/* Dashboard Section Background with Orange Overlay */
-.dashboard-container {
-  padding: 24px;
-  background: linear-gradient(135deg, #ff7e00, #ffa500); /* Orange gradient */
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-
-.dashboard-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: orange;
-  opacity: 0.8;
-  z-index: 0;
-}
-
-.dashboard-container > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Reusable Card Styling */
-.card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  color: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  padding: 1.75rem;
+.dashboard {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  transition: var(--transition);
-  border: 2px solid white;
-  background: orange;
-}
-.dashboard{
-  background:orange;
+  gap: 25px;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
-/* Title */
-.dashboard-title {
-  font-weight: bold;
-  color: #ffffff; /* Changed from blue to white for overlay contrast */
-}
-
-/* Grid & Layout */
-.dashboard-grid {
-  margin-bottom: 24px;
-}
-
-.dashboard-card {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  height: 100%;
-}
-
-.dashboard-card-content {
+.stat-card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  padding: 25px 15px;
 }
 
-/* Icons and Values */
-.icon-box {
-  margin-bottom: 8px;
+.stat-card.production {
+  border-top: 4px solid var(--secondary);
 }
 
-.card-value {
-  font-weight: bold;
-  margin-top: 8px;
+.stat-card.consumption {
+  border-top: 4px solid #2196F3;
 }
 
-/* Charts and Efficiency */
-.chart-container {
-  height: 300px;
+.stat-card.excess {
+  border-top: 4px solid #9C27B0;
 }
 
-.efficiency-box {
+.stat-card.credits {
+  border-top: 4px solid var(--primary);
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 10px 0 5px;
+}
+
+.stat-label {
+  color: var(--gray);
+  font-size: 0.9rem;
+}
+
+.dashboard-section {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.section-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
-.progress-bar {
-  width: 100%;
-  margin-right: 8px;
+.ai-badge {
+  background: #e1f5fe;
+  color: #0288d1;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
-.linear-progress {
-  height: 10px;
-  border-radius: 5px;
+.alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.efficiency-note {
-  margin-top: 8px;
-  font-style: italic;
-}
-
-/* Alerts */
 .alert-item {
-  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: #fff8e1;
+  border-radius: 8px;
+  border-left: 4px solid var(--warning);
 }
 
-/* Icon Color Tags */
-.card-blue .icon-box {
-  color: #0d3b66;
+.alert-icon {
+  font-size: 1.5rem;
+  margin-right: 15px;
 }
 
-.card-yellow .icon-box {
-  color: #f4d35e;
+.alert-text {
+  flex: 1;
 }
 
-.card-green .icon-box {
-  color: #28a745;
+.action-button {
+  background: var(--dark);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
 }
 
-.card-teal .icon-box {
-  color: #17a2b8;
+.tips-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.tip-card {
+  background: #e8f5e9;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  border-left: 4px solid var(--success);
+}
+
+.tip-icon {
+  font-size: 2rem;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  opacity: 0.2;
+}
+
+.info-button {
+  background: transparent;
+  border: 1px solid var(--success);
+  color: var(--success);
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-weight: 600;
+  cursor: pointer;
 }
