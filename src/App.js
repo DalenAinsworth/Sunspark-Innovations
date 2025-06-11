@@ -5,10 +5,13 @@ import Community from './components/Community';
 import Support from './components/Support';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import AIAssistant from './components/AIAssistant';
 import './App.css';
 
 function App() {
   const [currentView, setCurrentView] = useState('dashboard');
+  const [isAssistantOpen, setIsAssistantOpen] = useState(false); 
+
 
   const renderView = () => {
     switch(currentView) {
@@ -35,17 +38,21 @@ function App() {
 
   return (
     <div className="app-container">
-      <Navbar currentView={currentView} setCurrentView={setCurrentView} />
+      <Navbar 
+        currentView={currentView} 
+        setCurrentView={setCurrentView}
+        toggleAssistant={() => setIsAssistantOpen(!isAssistantOpen)} // Pass this
+      />
+      
       <div className="content-container">
         {renderView()}
       </div>
+      
+      {/* Add AI Assistant component */}
+      {isAssistantOpen && <AIAssistant onClose={() => setIsAssistantOpen(false)} />}
+      
       <footer className="app-footer">
-        <p>© 2024 Sunspark Innovations. AI-Powered Solar Solutions.</p>
-        <div className="footer-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">System Status</a>
-        </div>
+        {/* ... existing footer ... */}
       </footer>
     </div>
   );

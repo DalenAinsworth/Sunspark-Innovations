@@ -1,0 +1,117 @@
+/* AIAssistant.css */
+.ai-assistant-container {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 350px;
+    height: 500px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .ai-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #0a4a7a;
+    color: white;
+  }
+  
+  .ai-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .ai-icon {
+    font-size: 1.5rem;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 10px;
+  }
+  
+  .chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f9f9f9;
+  }
+  
+  .message {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 18px;
+    max-width: 80%;
+  }
+  
+  .message.user {
+    background: #0a4a7a;
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .message.ai {
+    background: #e6f0f7;
+    color: #333;
+    margin-right: auto;
+    border-bottom-left-radius: 5px;
+  }
+  
+  .chat-input {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid #eee;
+    background: white;
+  }
+  
+  .chat-input input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    outline: none;
+  }
+  
+  .chat-input button {
+    background: #0a4a7a;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+.ai-button {
+    background: linear-gradient(135deg, #0a4a7a, #0d8a9e);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .ai-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(10, 74, 122, 0.3);
+  }

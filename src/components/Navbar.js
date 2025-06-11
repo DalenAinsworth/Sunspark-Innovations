@@ -2,7 +2,7 @@
 import React from 'react';
 import './Navbar.css';
 
-const Navbar = ({ currentView, setCurrentView }) => {
+const Navbar = ({ currentView, setCurrentView, toggleAssistant }) => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
@@ -34,7 +34,7 @@ const Navbar = ({ currentView, setCurrentView }) => {
         </button>
       </div>
       <div className="ai-assistant">
-        <button className="ai-button">
+        <button className="ai-button" onClick={toggleAssistant}>
           <span>🤖</span> Ask AI Assistant
         </button>
       </div>
