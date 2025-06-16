@@ -7,7 +7,7 @@ const Hero = () => {
     <div className="hero">
       <div className="hero-content">
         <h1>Sunspark Energy Intelligence</h1>
-        <p>AI-powered solar management for optimal performance and savings</p>
+        <p>AI powered solar management for optimal performance and savings</p>
         <div className="hero-stats">
           <div className="stat-item">
             <span className="stat-value">24.7%</span>

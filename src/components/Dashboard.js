@@ -1,5 +1,6 @@
 // src/components/Dashboard.js
 import React, { useState, useEffect } from 'react';
+import EnergyGraph from './EnergyGraph';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -11,6 +12,8 @@ const Dashboard = () => {
     tips: [],
     alerts: []
   });
+  
+  const [activeGraph, setActiveGraph] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -32,32 +35,53 @@ const Dashboard = () => {
     }, 500);
   }, []);
 
+  const handleStatClick = (type) => {
+    setActiveGraph(activeGraph === type ? null : type);
+  };
+
   return (
     <div className="dashboard">
       <h2>Solar Energy Dashboard</h2>
 
       <div className="stats-grid">
-        <div className="stat-card production">
+        <div 
+          className={`stat-card production ${activeGraph === 'production' ? 'active' : ''}`}
+          onClick={() => handleStatClick('production')}
+        >
           <h3>Production</h3>
           <p className="stat-value">{energyData.production} kWh</p>
           <p className="stat-label">Today's generation</p>
         </div>
-        <div className="stat-card consumption">
+        
+        <div 
+          className={`stat-card consumption ${activeGraph === 'consumption' ? 'active' : ''}`}
+          onClick={() => handleStatClick('consumption')}
+        >
           <h3>Consumption</h3>
           <p className="stat-value">{energyData.consumption} kWh</p>
           <p className="stat-label">Energy used</p>
         </div>
-        <div className="stat-card excess">
+        
+        <div 
+          className={`stat-card excess ${activeGraph === 'excess' ? 'active' : ''}`}
+          onClick={() => handleStatClick('excess')}
+        >
           <h3>Excess Energy</h3>
           <p className="stat-value">{energyData.excess} kWh</p>
           <p className="stat-label">Sent to grid</p>
         </div>
+        
         <div className="stat-card credits">
           <h3>Energy Credits</h3>
           <p className="stat-value">{energyData.credits} kWh</p>
           <p className="stat-label">Available</p>
         </div>
       </div>
+
+      {/* Graph display area */}
+      {activeGraph && (
+        <EnergyGraph data={energyData} type={activeGraph} />
+      )}
 
       <div className="dashboard-section">
         <h3>AI Maintenance Alerts</h3>

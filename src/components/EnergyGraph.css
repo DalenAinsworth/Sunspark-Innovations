@@ -1,0 +1,46 @@
+/* src/components/EnergyGraph.css */
+.graph-container {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-top: 20px;
+  }
+  
+  .graph {
+    display: flex;
+    height: 200px;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 0 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 8%;
+  }
+  
+  .bar {
+    width: 100%;
+    background-color: #4CAF50;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.5s ease;
+  }
+  
+  .time-label {
+    font-size: 0.7rem;
+    margin-top: 5px;
+    color: var(--gray);
+  }
+  
+  .graph-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px 0;
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
