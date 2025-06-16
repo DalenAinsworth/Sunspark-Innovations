@@ -178,3 +178,7 @@
   background: var(--success);
   color: white;
 }
+
+.stat-card.credits.active {
+  box-shadow: 0 0 0 3px #a5d6a7; /* Light green */
+}

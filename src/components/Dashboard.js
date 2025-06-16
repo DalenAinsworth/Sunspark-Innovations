@@ -70,12 +70,14 @@ const Dashboard = () => {
           <p className="stat-value">{energyData.excess} kWh</p>
           <p className="stat-label">Sent to grid</p>
         </div>
-        
-        <div className="stat-card credits">
-          <h3>Energy Credits</h3>
-          <p className="stat-value">{energyData.credits} kWh</p>
-          <p className="stat-label">Available</p>
-        </div>
+        <div 
+  className={`stat-card credits ${activeGraph === 'credits' ? 'active' : ''}`}
+  onClick={() => handleStatClick('credits')}
+>
+  <h3>Energy Credits</h3>
+  <p className="stat-value">{energyData.credits} kWh</p>
+  <p className="stat-label">Available</p>
+</div>
       </div>
 
       {/* Graph display area */}
