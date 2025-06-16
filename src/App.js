@@ -6,12 +6,12 @@ import Support from './components/Support';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import AIAssistant from './components/AIAssistant';
+import About from './components/About';
 import './App.css';
 
 function App() {
   const [currentView, setCurrentView] = useState('dashboard');
   const [isAssistantOpen, setIsAssistantOpen] = useState(false); 
-
 
   const renderView = () => {
     switch(currentView) {
@@ -26,6 +26,8 @@ function App() {
         return <Community />;
       case 'support':
         return <Support />;
+      case 'about': 
+        return <About />;
       default:
         return (
           <>
@@ -41,18 +43,16 @@ function App() {
       <Navbar 
         currentView={currentView} 
         setCurrentView={setCurrentView}
-        toggleAssistant={() => setIsAssistantOpen(!isAssistantOpen)} // Pass this
+        toggleAssistant={() => setIsAssistantOpen(!isAssistantOpen)}
       />
       
       <div className="content-container">
         {renderView()}
       </div>
       
-      {/* Add AI Assistant component */}
       {isAssistantOpen && <AIAssistant onClose={() => setIsAssistantOpen(false)} />}
       
       <footer className="app-footer">
-        {/* ... existing footer ... */}
       </footer>
     </div>
   );

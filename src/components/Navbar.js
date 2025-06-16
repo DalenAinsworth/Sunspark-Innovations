@@ -32,6 +32,12 @@ const Navbar = ({ currentView, setCurrentView, toggleAssistant }) => {
         >
           <span>🛠️</span> Support
         </button>
+        <button 
+  className={`nav-link ${currentView === 'about' ? 'active' : ''}`}
+  onClick={() => setCurrentView('about')}
+>
+  <span>ℹ️</span> About Us
+</button>
       </div>
       <div className="ai-assistant">
         <button className="ai-button" onClick={toggleAssistant}>
