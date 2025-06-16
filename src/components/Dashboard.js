@@ -1,4 +1,3 @@
-// src/components/Dashboard.js
 import React, { useState, useEffect } from 'react';
 import EnergyGraph from './EnergyGraph';
 import './Dashboard.css';
@@ -14,6 +13,9 @@ const Dashboard = () => {
   });
   
   const [activeGraph, setActiveGraph] = useState(null);
+  const [activeTip, setActiveTip] = useState(null);
+  const [schedulingAlert, setSchedulingAlert] = useState(null);
+  const [scheduleDateTime, setScheduleDateTime] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
@@ -23,13 +25,28 @@ const Dashboard = () => {
         excess: 1.4,
         credits: 1.4,
         alerts: [
-          'Panel #4 efficiency reduced by 12%',
-          'Monthly maintenance due in 3 days'
+          { id: 1, text: 'Panel #4 efficiency reduced by 12%' },
+          { id: 2, text: 'Monthly maintenance due in 3 days' }
         ],
         tips: [
-          'Shift laundry to noon when solar production peaks',
-          'Consider adding battery storage for evening usage',
-          'Adjust panel angle for better winter sun exposure'
+          {
+            id: 1,
+            title: 'Shift laundry to noon when solar production peaks',
+            details: 'Running high-energy appliances during peak solar hours (10am-2pm) reduces grid dependence. This uses your free solar energy and may increase energy credits.',
+            link: '/tips/load-shifting'
+          },
+          {
+            id: 2,
+            title: 'Consider adding battery storage for evening usage',
+            details: 'Battery storage systems store excess solar energy produced during the day for use in the evening. This can reduce your evening grid consumption and provide backup power during outages.',
+            link: '/tips/battery-storage'
+          },
+          {
+            id: 3,
+            title: 'Adjust panel angle for better winter sun exposure',
+            details: 'In winter, the sun is lower in the sky. Adjusting your panel tilt angle to be steeper (around your latitude +15 degrees) can capture more sunlight and increase winter production.',
+            link: '/tips/panel-angle'
+          }
         ]
       });
     }, 500);
@@ -37,6 +54,26 @@ const Dashboard = () => {
 
   const handleStatClick = (type) => {
     setActiveGraph(activeGraph === type ? null : type);
+  };
+
+  const handleLearnMore = (tip) => {
+    setActiveTip(tip);
+  };
+
+  const handleSchedule = (alert) => {
+    setSchedulingAlert(alert);
+    // Default to tomorrow at 10 AM
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(10, 0, 0, 0);
+    setScheduleDateTime(tomorrow.toISOString().slice(0, 16));
+  };
+
+  const confirmSchedule = () => {
+    if (schedulingAlert && scheduleDateTime) {
+      alert(`Scheduled "${schedulingAlert.text}" for ${new Date(scheduleDateTime).toLocaleString()}`);
+      setSchedulingAlert(null);
+    }
   };
 
   return (
@@ -70,14 +107,15 @@ const Dashboard = () => {
           <p className="stat-value">{energyData.excess} kWh</p>
           <p className="stat-label">Sent to grid</p>
         </div>
+        
         <div 
-  className={`stat-card credits ${activeGraph === 'credits' ? 'active' : ''}`}
-  onClick={() => handleStatClick('credits')}
->
-  <h3>Energy Credits</h3>
-  <p className="stat-value">{energyData.credits} kWh</p>
-  <p className="stat-label">Available</p>
-</div>
+          className={`stat-card credits ${activeGraph === 'credits' ? 'active' : ''}`}
+          onClick={() => handleStatClick('credits')}
+        >
+          <h3>Energy Credits</h3>
+          <p className="stat-value">{energyData.credits} kWh</p>
+          <p className="stat-label">Available</p>
+        </div>
       </div>
 
       {/* Graph display area */}
@@ -88,11 +126,16 @@ const Dashboard = () => {
       <div className="dashboard-section">
         <h3>AI Maintenance Alerts</h3>
         <div className="alerts-container">
-          {energyData.alerts.map((alert, i) => (
-            <div key={i} className="alert-item">
+          {energyData.alerts.map((alert) => (
+            <div key={alert.id} className="alert-item">
               <span className="alert-icon">⚠️</span>
-              <span className="alert-text">{alert}</span>
-              <button className="action-button">Schedule</button>
+              <span className="alert-text">{alert.text}</span>
+              <button 
+                className="action-button"
+                onClick={() => handleSchedule(alert)}
+              >
+                Schedule
+              </button>
             </div>
           ))}
         </div>
@@ -104,15 +147,95 @@ const Dashboard = () => {
           <span className="ai-badge">Powered by Sunspark AI</span>
         </div>
         <div className="tips-container">
-          {energyData.tips.map((tip, i) => (
-            <div key={i} className="tip-card">
+          {energyData.tips.map((tip) => (
+            <div key={tip.id} className="tip-card">
               <span className="tip-icon">💡</span>
-              <p>{tip}</p>
-              <button className="info-button">Learn more</button>
+              <p>{tip.title}</p>
+              <button 
+                className="info-button"
+                onClick={() => handleLearnMore(tip)}
+              >
+                Learn more
+              </button>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Tip Detail Modal */}
+      {activeTip && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <div className="modal-header">
+              <h3>{activeTip.title}</h3>
+              <button className="modal-close" onClick={() => setActiveTip(null)}>
+                &times;
+              </button>
+            </div>
+            <div className="modal-content">
+              <p>{activeTip.details}</p>
+              <div className="modal-actions">
+                <a 
+                  href={activeTip.link} 
+                  className="action-button"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  View Full Details
+                </a>
+                <button 
+                  className="info-button"
+                  onClick={() => setActiveTip(null)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Schedule Maintenance Modal */}
+      {schedulingAlert && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <div className="modal-header">
+              <h3>Schedule Maintenance</h3>
+              <button className="modal-close" onClick={() => setSchedulingAlert(null)}>
+                &times;
+              </button>
+            </div>
+            <div className="modal-content">
+              <p>Schedule service for: <strong>{schedulingAlert.text}</strong></p>
+              
+              <div className="form-group">
+                <label>Select Date & Time:</label>
+                <input 
+                  type="datetime-local" 
+                  value={scheduleDateTime}
+                  onChange={(e) => setScheduleDateTime(e.target.value)}
+                  min={new Date().toISOString().slice(0, 16)}
+                />
+              </div>
+              
+              <div className="modal-actions">
+                <button 
+                  className="action-button"
+                  onClick={confirmSchedule}
+                >
+                  Confirm Schedule
+                </button>
+                <button 
+                  className="info-button"
+                  onClick={() => setSchedulingAlert(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
