@@ -86,26 +86,36 @@ const Community = () => {
           </div>
 
           <div className="community-section">
-            <h3>Your Performance vs Community Average</h3>
-            <div className="comparisons">
-              {communityData.comparisons.map((item, index) => (
-                <div key={index} className="comparison-item">
-                  <div className="metric-header">
-                    <span className="metric-name">{item.metric}</span>
-                    <span className="metric-diff">{item.diff}</span>
-                  </div>
-                  <div className="metric-values">
-                    <div className="value-bar your-value" style={{ width: `${(item.you / 6) * 100}%` }}>
-                      <span>You: {item.you}</span>
-                    </div>
-                    <div className="value-bar avg-value" style={{ width: `${(item.avg / 6) * 100}%` }}>
-                      <span>Avg: {item.avg}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+  <h3>Your Performance vs Community Average</h3>
+  <div className="comparisons">
+    {communityData.comparisons.map((item, index) => {
+      // Calculate max value with 10% buffer
+      const maxValue = Math.max(item.you, item.avg) * 1.1;
+      return (
+        <div key={index} className="comparison-item">
+          <div className="metric-header">
+            <span className="metric-name">{item.metric}</span>
+            <span className="metric-diff">{item.diff}</span>
+          </div>
+          <div className="metric-values">
+            <div 
+              className="value-bar your-value" 
+              style={{ width: `${(item.you / maxValue) * 100}%` }}
+            >
+              <span>You: {item.you}</span>
+            </div>
+            <div 
+              className="value-bar avg-value" 
+              style={{ width: `${(item.avg / maxValue) * 100}%` }}
+            >
+              <span>Avg: {item.avg}</span>
             </div>
           </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
         </>
       ) : (
         <div className="maintenance-view">

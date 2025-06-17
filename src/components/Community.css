@@ -176,3 +176,40 @@
   background: #d4edda;
   color: #155724;
 }
+.comparisons {
+  width: 100%;
+}
+
+.metric-values {
+  position: relative;
+  width: 100%;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden; /* Prevent overflow */
+  margin-top: 8px;
+}
+
+.value-bar {
+  height: 30px;
+  margin: 2px 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: width 0.5s ease;
+}
+
+.value-bar span {
+  padding: 0 8px;
+  font-size: 0.8rem;
+  white-space: nowrap; /* Keep text in single line */
+}
+
+.your-value {
+  background-color: #4CAF50;
+  justify-content: flex-start;
+}
+
+.avg-value {
+  background-color: #2196F3;
+  justify-content: flex-end;
+}
