@@ -1,15 +1,15 @@
 /* App.css */
 /* Global Styles */
 :root {
-  --primary: #FF6B00;
-  --secondary: #00A896;
-  --dark: #1A2B3C;
-  --light: #F5F7FA;
-  --gray: #8A94A6;
-  --success: #4CAF50;
-  --warning: #FFC107;
-  --danger: #F44336;
+  /* Updated Sunspark colors */
+  --primary: #FF6B00;       /* Sunspark orange */
+  --primary-light: #FF9E45; /* Lighter orange */
+  --secondary: #00A896;     /* Teal */
+  --dark: #1A2B3C;          /* Dark blue */
+  --light: #F5F7FA;         /* Light background */
+  --accent: #0D8A9E;        /* Medium blue */
 }
+
 
 * {
   box-sizing: border-box;

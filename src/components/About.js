@@ -26,13 +26,21 @@ const About = () => {
       </section>
       
       <section className="commitment section">
-        <h2>Our Commitment to the Community</h2>
-        <p>
-          At Sunspark Innovation, we are committed to reinvesting in the communities we serve through our Community Support Fund. 
-          With 8% of every solar installation set aside, we fund projects that strengthen homes, businesses, and faith based 
-          organizations while promoting local economic growth.
-        </p>
-      </section>
+  <h2>Our Commitment to the Community</h2>
+  <p>
+    At Sunspark Innovation, we reinvest in communities through our Community Support Fund. 
+    <strong> 80% of proceeds from Energy Credits sold</strong> fund projects that strengthen homes, 
+    businesses, and faith-based organizations while promoting local economic growth.
+  </p>
+  <section className="veterans-section">
+  <h2>Homes for Heroes Initiative</h2>
+  <p>
+    Sunspark Innovation is proud to announce our "Homes for Heroes" initiative - building 
+    <strong> specialized solar-powered homes for veterans</strong> in both rural and urban communities. 
+    These energy-efficient homes provide sustainable living solutions for those who served our nation.
+  </p>
+</section>
+</section>
       <section className="justin">
         <h2>Meet the CEO</h2>
         <p>

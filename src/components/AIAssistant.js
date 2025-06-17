@@ -30,7 +30,7 @@ const AIAssistant = ({ onClose }) => {
 
   const getAIResponse = (query) => {
     const lowerQuery = query.toLowerCase();
-    
+  
     // Define response scenarios
     if (lowerQuery.includes('credit') || lowerQuery.includes('reward')) {
       return "Energy credits are earned when you send excess power to the grid. Each kWh earns 1 credit that you can use during low-production periods. Your current credit balance is 1.4 kWh.";
@@ -38,6 +38,8 @@ const AIAssistant = ({ onClose }) => {
       return "For optimal panel performance:\n1. Clean panels every 3 months\n2. Check inverter connections monthly\n3. Trim nearby trees quarterly\nWould you like to schedule maintenance?";
     } else if (lowerQuery.includes('efficien') || lowerQuery.includes('optimiz')) {
       return "Based on your usage patterns:\n1. Shift appliance use to 11AM-2PM\n2. Enable battery storage mode\n3. Update panel angles seasonally\nI can implement these changes if you'd like!";
+    } else if (lowerQuery.includes('peak') || lowerQuery.includes('shift')) {
+      return "Our peak production hours are 11AM-2PM. Shifting 1kWh of usage to noon could save you approximately $0.30 daily. Would you like me to optimize your schedule?";
     } else if (lowerQuery.includes('bill') || lowerQuery.includes('cost')) {
       return "Your current savings:\n▸ Production: 5.2 kWh ($1.25)\n▸ Credits: 1.4 kWh ($0.35)\n▸ Total savings today: $1.60\nEstimated monthly savings: $48";
     } else if (lowerQuery.includes('hello') || lowerQuery.includes('hi')) {

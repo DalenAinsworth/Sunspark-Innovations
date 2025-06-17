@@ -44,3 +44,30 @@
     font-size: 0.8rem;
     color: var(--gray);
   }
+
+  .peak-hours-overlay {
+    position: absolute;
+    top: 0;
+    left: 37.5%; /* Approx 11AM position */
+    width: 25%;   /* 11AM-2PM is 3 hours = 25% of 12 hours */
+    height: 100%;
+    background: rgba(255, 107, 0, 0.1);
+    border-left: 2px dashed var(--primary);
+    border-right: 2px dashed var(--primary);
+    pointer-events: none;
+  }
+  
+  .peak-marker {
+    position: absolute;
+    top: -25px;
+    font-size: 0.8rem;
+    color: var(--primary);
+  }
+  
+  .peak-marker.start {
+    left: 0;
+  }
+  
+  .peak-marker.end {
+    right: 0;
+  }

@@ -1,3 +1,4 @@
+/* Dashboard.js */
 import React, { useState, useEffect } from 'react';
 import EnergyGraph from './EnergyGraph';
 import './Dashboard.css';
@@ -11,7 +12,7 @@ const Dashboard = () => {
     tips: [],
     alerts: []
   });
-  
+
   const [activeGraph, setActiveGraph] = useState(null);
   const [activeTip, setActiveTip] = useState(null);
   const [schedulingAlert, setSchedulingAlert] = useState(null);
@@ -46,6 +47,13 @@ const Dashboard = () => {
             title: 'Adjust panel angle for better winter sun exposure',
             details: 'In winter, the sun is lower in the sky. Adjusting your panel tilt angle to be steeper (around your latitude +15 degrees) can capture more sunlight and increase winter production.',
             link: '/tips/panel-angle'
+          },
+          {
+            // ✅ New tip added here
+            id: 4,
+            title: 'Shift usage to noon during peak production',
+            details: 'Moving 1.5kWh of usage to noon (peak production hours) could save you $0.45 daily ($13.50 monthly)',
+            link: '/tips/peak-shifting'
           }
         ]
       });
@@ -62,7 +70,6 @@ const Dashboard = () => {
 
   const handleSchedule = (alert) => {
     setSchedulingAlert(alert);
-    // Default to tomorrow at 10 AM
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(10, 0, 0, 0);
@@ -89,7 +96,7 @@ const Dashboard = () => {
           <p className="stat-value">{energyData.production} kWh</p>
           <p className="stat-label">Today's generation</p>
         </div>
-        
+
         <div 
           className={`stat-card consumption ${activeGraph === 'consumption' ? 'active' : ''}`}
           onClick={() => handleStatClick('consumption')}
@@ -98,7 +105,7 @@ const Dashboard = () => {
           <p className="stat-value">{energyData.consumption} kWh</p>
           <p className="stat-label">Energy used</p>
         </div>
-        
+
         <div 
           className={`stat-card excess ${activeGraph === 'excess' ? 'active' : ''}`}
           onClick={() => handleStatClick('excess')}
@@ -107,7 +114,7 @@ const Dashboard = () => {
           <p className="stat-value">{energyData.excess} kWh</p>
           <p className="stat-label">Sent to grid</p>
         </div>
-        
+
         <div 
           className={`stat-card credits ${activeGraph === 'credits' ? 'active' : ''}`}
           onClick={() => handleStatClick('credits')}
@@ -118,9 +125,12 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Graph display area */}
       {activeGraph && (
-        <EnergyGraph data={energyData} type={activeGraph} />
+        <EnergyGraph 
+          data={energyData} 
+          type={activeGraph}
+          showPeakHours={true} // ✅ Show peak hour indicator
+        />
       )}
 
       <div className="dashboard-section">
@@ -162,7 +172,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Tip Detail Modal */}
       {activeTip && (
         <div className="modal-overlay">
           <div className="modal">
@@ -195,7 +204,6 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Schedule Maintenance Modal */}
       {schedulingAlert && (
         <div className="modal-overlay">
           <div className="modal">
@@ -207,7 +215,7 @@ const Dashboard = () => {
             </div>
             <div className="modal-content">
               <p>Schedule service for: <strong>{schedulingAlert.text}</strong></p>
-              
+
               <div className="form-group">
                 <label>Select Date & Time:</label>
                 <input 
@@ -217,7 +225,7 @@ const Dashboard = () => {
                   min={new Date().toISOString().slice(0, 16)}
                 />
               </div>
-              
+
               <div className="modal-actions">
                 <button 
                   className="action-button"

@@ -1,8 +1,11 @@
 // src/components/Community.js
-import React from 'react';
+import React, { useState } from 'react';
 import './Community.css';
 
 const Community = () => {
+  // Add role selector at top
+  const [userRole, setUserRole] = useState('homeowner');
+
   const communityData = {
     totalEnergy: 2450,
     totalConsumption: 1820,
@@ -22,6 +25,29 @@ const Community = () => {
 
   return (
     <div className="community-container">
+      <div className="data-sharing-banner">
+        <p>
+          <strong>Join our network:</strong> By participating in our community program, 
+          you agree to share anonymized utility data to improve energy resilience for all members.
+        </p>
+      </div>
+
+      {/* Role Selector */}
+      <div className="role-selector">
+        <button 
+          className={userRole === 'homeowner' ? 'active' : ''}
+          onClick={() => setUserRole('homeowner')}
+        >
+          Homeowner View
+        </button>
+        <button 
+          className={userRole === 'maintenance' ? 'active' : ''}
+          onClick={() => setUserRole('maintenance')}
+        >
+          Maintenance View
+        </button>
+      </div>
+
       <h2>Community Energy Dashboard</h2>
 
       <div className="community-stats">
@@ -39,44 +65,63 @@ const Community = () => {
         </div>
       </div>
 
-      <div className="community-section">
-        <h3>Top Performing Homes</h3>
-        <div className="leaderboard">
-          {communityData.leaderboard.map((home, index) => (
-            <div key={index} className="leaderboard-item">
-              <span className="rank">#{home.rank}</span>
-              <span className="name">{home.name}</span>
-              <div className="metrics">
-                <span>⚡ {home.production} kWh</span>
-                <span>🔋 {home.consumption} kWh</span>
-                <span>⭐ {home.credits} cr</span>
-              </div>
+      {/* Show homeowner leaderboard or maintenance info */}
+      {userRole === 'homeowner' ? (
+        <>
+          <div className="community-section">
+            <h3>Top Performing Homes</h3>
+            <div className="leaderboard">
+              {communityData.leaderboard.map((home, index) => (
+                <div key={index} className="leaderboard-item">
+                  <span className="rank">#{home.rank}</span>
+                  <span className="name">{home.name}</span>
+                  <div className="metrics">
+                    <span>⚡ {home.production} kWh</span>
+                    <span>🔋 {home.consumption} kWh</span>
+                    <span>⭐ {home.credits} cr</span>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      <div className="community-section">
-        <h3>Your Performance vs Community Average</h3>
-        <div className="comparisons">
-          {communityData.comparisons.map((item, index) => (
-            <div key={index} className="comparison-item">
-              <div className="metric-header">
-                <span className="metric-name">{item.metric}</span>
-                <span className="metric-diff">{item.diff}</span>
-              </div>
-              <div className="metric-values">
-                <div className="value-bar your-value" style={{ width: `${(item.you / 6) * 100}%` }}>
-                  <span>You: {item.you}</span>
+          <div className="community-section">
+            <h3>Your Performance vs Community Average</h3>
+            <div className="comparisons">
+              {communityData.comparisons.map((item, index) => (
+                <div key={index} className="comparison-item">
+                  <div className="metric-header">
+                    <span className="metric-name">{item.metric}</span>
+                    <span className="metric-diff">{item.diff}</span>
+                  </div>
+                  <div className="metric-values">
+                    <div className="value-bar your-value" style={{ width: `${(item.you / 6) * 100}%` }}>
+                      <span>You: {item.you}</span>
+                    </div>
+                    <div className="value-bar avg-value" style={{ width: `${(item.avg / 6) * 100}%` }}>
+                      <span>Avg: {item.avg}</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="value-bar avg-value" style={{ width: `${(item.avg / 6) * 100}%` }}>
-                  <span>Avg: {item.avg}</span>
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
+        </>
+      ) : (
+        <div className="maintenance-view">
+          <h3>Maintenance Dashboard</h3>
+          <div className="maintenance-list">
+            <div className="maintenance-item">
+              <span>Panel Cleaning - Green Home</span>
+              <span className="status-badge pending">Scheduled: 6/20</span>
+            </div>
+            <div className="maintenance-item">
+              <span>Inverter Check - Solar House</span>
+              <span className="status-badge completed">Completed</span>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

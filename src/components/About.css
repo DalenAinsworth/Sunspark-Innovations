@@ -32,3 +32,10 @@
     border-radius: 8px;
     border-left: 4px solid #1abc9c;
   }
+  .veterans-section {
+    background-color: #f0f7ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #0D8A9E;
+    margin-top: 2rem;
+  }

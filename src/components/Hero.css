@@ -1,6 +1,6 @@
 /* //Hero.css */
 .hero {
-  background: linear-gradient(135deg, #1A2B3C 0%, #0D1B2A 100%);
+  background: linear-gradient(135deg, var(--dark) 0%, #0D1B2A 100%);
   color: white;
   border-radius: 12px;
   overflow: hidden;

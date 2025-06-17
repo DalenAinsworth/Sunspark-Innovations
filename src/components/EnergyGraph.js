@@ -2,7 +2,7 @@
 import React from 'react';
 import './EnergyGraph.css';
 
-const EnergyGraph = ({ data, type }) => {
+const EnergyGraph = ({ data, type, showPeakHours }) => {
   // Sample data for different metrics
   const chartData = {
     production: [0, 0.2, 0.8, 2.1, 3.5, 4.8, 5.2, 4.9, 4.1, 3.2, 2.0, 1.0],
@@ -19,7 +19,7 @@ const EnergyGraph = ({ data, type }) => {
   };
 
   const maxValue = Math.max(...chartData[type]);
-  
+
   return (
     <div className="graph-container">
       <h3>{type.charAt(0).toUpperCase() + type.slice(1)} Trend</h3>
@@ -36,6 +36,15 @@ const EnergyGraph = ({ data, type }) => {
             <span className="time-label">{index * 2}:00</span>
           </div>
         ))}
+
+        {/* Add peak hours overlay */}
+        {showPeakHours && type === 'production' && (
+          <div className="peak-hours-overlay">
+            <div className="peak-marker start">11AM</div>
+            <div className="peak-band"></div>
+            <div className="peak-marker end">2PM</div>
+          </div>
+        )}
       </div>
       <div className="graph-footer">
         <span>Midnight</span>
