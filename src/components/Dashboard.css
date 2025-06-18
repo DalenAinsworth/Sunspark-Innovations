@@ -271,3 +271,57 @@
     flex-direction: column;
   }
 }
+
+@media (max-width: 768px) {
+  .dashboard {
+    gap: 15px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .stat-card {
+    padding: 15px 5px;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .dashboard-section {
+    padding: 15px;
+  }
+  
+  .tips-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .ai-badge {
+    margin-top: 10px;
+  }
+  
+  .alert-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .alert-icon {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .action-button {
+    margin-top: 10px;
+  }
+  
+  .modal {
+    width: 95%;
+  }
+}

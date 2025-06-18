@@ -293,3 +293,52 @@
 .join-button:hover {
   background: #e55a00;
 }
+
+@media (max-width: 768px) {
+  .community-container {
+    gap: 15px;
+  }
+  
+  .community-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card {
+    text-align: center;
+  }
+  
+  .role-selector {
+    flex-direction: column;
+  }
+  
+  .subview-selector {
+    flex-direction: column;
+    border-radius: 8px;
+  }
+  
+  .subview-selector button {
+    width: 100%;
+  }
+  
+  .leaderboard-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .metrics {
+    margin-top: 10px;
+    justify-content: center;
+  }
+  
+  .comparison-item {
+    padding: 10px;
+  }
+  
+  .community-section {
+    padding: 15px;
+  }
+  
+  .challenges-container {
+    grid-template-columns: 1fr;
+  }
+}

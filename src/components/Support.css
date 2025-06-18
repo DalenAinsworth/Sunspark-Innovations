@@ -247,3 +247,30 @@
   margin-top: 20px;
   font-size: 0.95rem;
 }
+
+@media (max-width: 768px) {
+  .support-container {
+    gap: 15px;
+  }
+  
+  .support-tabs {
+    flex-direction: column;
+    border-radius: 8px;
+  }
+  
+  .support-section {
+    padding: 15px;
+  }
+  
+  .resources-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .training-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-methods {
+    grid-template-columns: 1fr;
+  }
+}

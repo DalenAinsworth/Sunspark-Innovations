@@ -81,3 +81,24 @@ body {
   color: var(--primary);
   margin: 10px 0;
 }
+
+@media (max-width: 768px) {
+  .content-container {
+    padding: 10px;
+  }
+  
+  .app-footer {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .footer-links a {
+    margin: 5px;
+  }
+}

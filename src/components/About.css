@@ -39,3 +39,18 @@
     border-left: 4px solid #0D8A9E;
     margin-top: 2rem;
   }
+
+  @media (max-width: 768px) {
+    .about-container {
+      padding: 15px;
+    }
+    
+    .about-container h1 {
+      font-size: 1.8rem;
+    }
+    
+    .commitment-section,
+    .veterans-section {
+      padding: 15px;
+    }
+  }

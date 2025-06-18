@@ -71,3 +71,21 @@
   .peak-marker.end {
     right: 0;
   }
+
+  @media (max-width: 768px) {
+    .graph-container {
+      padding: 15px;
+    }
+    
+    .graph {
+      height: 150px;
+    }
+    
+    .bar-container {
+      width: 7%;
+    }
+    
+    .time-label {
+      font-size: 0.6rem;
+    }
+  }

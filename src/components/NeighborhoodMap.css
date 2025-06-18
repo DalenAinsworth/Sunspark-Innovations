@@ -96,3 +96,19 @@
   .legend-icon.your-home {
     background: var(--primary);
   }
+
+  @media (max-width: 768px) {
+    .map-container {
+      height: 300px;
+    }
+    
+    .map-legend {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .legend-item {
+      width: 100%;
+      justify-content: center;
+    }
+  }

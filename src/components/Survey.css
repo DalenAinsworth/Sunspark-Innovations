@@ -64,3 +64,17 @@
     border-radius: 8px;
     text-align: center;
   }
+
+  @media (max-width: 768px) {
+    .survey-container {
+      padding: 15px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .radio-group {
+      gap: 8px;
+    }
+  }
