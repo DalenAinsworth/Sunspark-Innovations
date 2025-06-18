@@ -18,7 +18,11 @@ const Dashboard = () => {
   const [schedulingAlert, setSchedulingAlert] = useState(null);
   const [scheduleDateTime, setScheduleDateTime] = useState('');
 
+  // New state for coaching tip
+  const [coachingTip, setCoachingTip] = useState(null);
+
   useEffect(() => {
+    // Initial energy data load simulation
     setTimeout(() => {
       setEnergyData({
         production: 5.2,
@@ -49,7 +53,6 @@ const Dashboard = () => {
             link: '/tips/panel-angle'
           },
           {
-            // ✅ New tip added here
             id: 4,
             title: 'Shift usage to noon during peak production',
             details: 'Moving 1.5kWh of usage to noon (peak production hours) could save you $0.45 daily ($13.50 monthly)',
@@ -58,6 +61,23 @@ const Dashboard = () => {
         ]
       });
     }, 500);
+
+    // Add personalized coaching tip after initial load
+    setTimeout(() => {
+      const personalizedTip = {
+        id: 5,
+        title: 'Personalized Coaching Tip',
+        details: 'Based on your production patterns, shifting 1.5kWh of usage to noon could save you $0.45 daily ($13.50 monthly)',
+        link: '/tips/peak-shifting'
+      };
+
+      setEnergyData(prev => ({
+        ...prev,
+        tips: [...prev.tips, personalizedTip]
+      }));
+
+      setCoachingTip(personalizedTip);
+    }, 1500);
   }, []);
 
   const handleStatClick = (type) => {
@@ -129,7 +149,7 @@ const Dashboard = () => {
         <EnergyGraph 
           data={energyData} 
           type={activeGraph}
-          showPeakHours={true} // ✅ Show peak hour indicator
+          showPeakHours={true} // Show peak hour indicator
         />
       )}
 
@@ -171,6 +191,15 @@ const Dashboard = () => {
           ))}
         </div>
       </div>
+
+      {/* Optional: show personalized coaching tip separately */}
+      {coachingTip && (
+        <div className="personalized-tip dashboard-section">
+          <h3>{coachingTip.title}</h3>
+          <p>{coachingTip.details}</p>
+          <a href={coachingTip.link} target="_blank" rel="noopener noreferrer">Learn More</a>
+        </div>
+      )}
 
       {activeTip && (
         <div className="modal-overlay">

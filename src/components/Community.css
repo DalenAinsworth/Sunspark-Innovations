@@ -213,3 +213,83 @@
   background-color: #2196F3;
   justify-content: flex-end;
 }
+
+.subview-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  background: #f0f2f5;
+  padding: 5px;
+  border-radius: 50px;
+}
+
+.subview-selector button {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  background: transparent;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.subview-selector button.active {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.challenges-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.challenge-card {
+  background: #e8f5e9;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid var(--success);
+}
+
+.challenge-card h4 {
+  margin-top: 0;
+  color: var(--dark);
+}
+
+.progress-container {
+  background: #c8e6c9;
+  border-radius: 10px;
+  height: 25px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background: var(--success);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: width 0.5s ease;
+}
+
+.join-button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.join-button:hover {
+  background: #e55a00;
+}

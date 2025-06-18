@@ -2,10 +2,17 @@
 import React, { useState } from 'react';
 import './Community.css';
 
+import Survey from './Survey';           // New component
+import NeighborhoodMap from './NeighborhoodMap'; // New component
+
 const Community = () => {
-  // Add role selector at top
+  // Role selector at top
   const [userRole, setUserRole] = useState('homeowner');
 
+  // Homeowner subview selector
+  const [homeownerSubView, setHomeownerSubView] = useState('dashboard');
+
+  // Static community data
   const communityData = {
     totalEnergy: 2450,
     totalConsumption: 1820,
@@ -22,6 +29,12 @@ const Community = () => {
       { metric: 'Credits', you: 1.4, avg: 1.2, diff: '+16.7%' }
     ]
   };
+
+  // New challenge data
+  const challenges = [
+    { id: 1, name: 'Energy Saver Week', goal: 100, current: 75, description: 'Reduce your energy consumption by 10% this week' },
+    { id: 2, name: 'Solar Champion', goal: 50, current: 30, description: 'Produce 50 kWh of solar energy' },
+  ];
 
   return (
     <div className="community-container">
@@ -65,57 +78,123 @@ const Community = () => {
         </div>
       </div>
 
-      {/* Show homeowner leaderboard or maintenance info */}
       {userRole === 'homeowner' ? (
         <>
-          <div className="community-section">
-            <h3>Top Performing Homes</h3>
-            <div className="leaderboard">
-              {communityData.leaderboard.map((home, index) => (
-                <div key={index} className="leaderboard-item">
-                  <span className="rank">#{home.rank}</span>
-                  <span className="name">{home.name}</span>
-                  <div className="metrics">
-                    <span>⚡ {home.production} kWh</span>
-                    <span>🔋 {home.consumption} kWh</span>
-                    <span>⭐ {home.credits} cr</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* Subview Selector for Homeowners */}
+          <div className="subview-selector">
+            <button 
+              className={homeownerSubView === 'dashboard' ? 'active' : ''}
+              onClick={() => setHomeownerSubView('dashboard')}
+            >
+              Dashboard
+            </button>
+            <button 
+              className={homeownerSubView === 'challenges' ? 'active' : ''}
+              onClick={() => setHomeownerSubView('challenges')}
+            >
+              Challenges
+            </button>
+            <button 
+              className={homeownerSubView === 'survey' ? 'active' : ''}
+              onClick={() => setHomeownerSubView('survey')}
+            >
+              Survey
+            </button>
+            <button 
+              className={homeownerSubView === 'map' ? 'active' : ''}
+              onClick={() => setHomeownerSubView('map')}
+            >
+              Neighborhood Map
+            </button>
           </div>
 
-          <div className="community-section">
-  <h3>Your Performance vs Community Average</h3>
-  <div className="comparisons">
-    {communityData.comparisons.map((item, index) => {
-      // Calculate max value with 10% buffer
-      const maxValue = Math.max(item.you, item.avg) * 1.1;
-      return (
-        <div key={index} className="comparison-item">
-          <div className="metric-header">
-            <span className="metric-name">{item.metric}</span>
-            <span className="metric-diff">{item.diff}</span>
-          </div>
-          <div className="metric-values">
-            <div 
-              className="value-bar your-value" 
-              style={{ width: `${(item.you / maxValue) * 100}%` }}
-            >
-              <span>You: {item.you}</span>
+          {/* Subview Content */}
+          {homeownerSubView === 'dashboard' && (
+            <>
+              <div className="community-section">
+                <h3>Top Performing Homes</h3>
+                <div className="leaderboard">
+                  {communityData.leaderboard.map((home, index) => (
+                    <div key={index} className="leaderboard-item">
+                      <span className="rank">#{home.rank}</span>
+                      <span className="name">{home.name}</span>
+                      <div className="metrics">
+                        <span>⚡ {home.production} kWh</span>
+                        <span>🔋 {home.consumption} kWh</span>
+                        <span>⭐ {home.credits} cr</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="community-section">
+                <h3>Your Performance vs Community Average</h3>
+                <div className="comparisons">
+                  {communityData.comparisons.map((item, index) => {
+                    const maxValue = Math.max(item.you, item.avg) * 1.1;
+                    return (
+                      <div key={index} className="comparison-item">
+                        <div className="metric-header">
+                          <span className="metric-name">{item.metric}</span>
+                          <span className="metric-diff">{item.diff}</span>
+                        </div>
+                        <div className="metric-values">
+                          <div 
+                            className="value-bar your-value" 
+                            style={{ width: `${(item.you / maxValue) * 100}%` }}
+                          >
+                            <span>You: {item.you}</span>
+                          </div>
+                          <div 
+                            className="value-bar avg-value" 
+                            style={{ width: `${(item.avg / maxValue) * 100}%` }}
+                          >
+                            <span>Avg: {item.avg}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          )}
+
+          {homeownerSubView === 'challenges' && (
+            <div className="community-section">
+              <h3>Neighborhood Energy Challenges</h3>
+              <div className="challenges-container">
+                {challenges.map(challenge => (
+                  <div key={challenge.id} className="challenge-card">
+                    <h4>{challenge.name}</h4>
+                    <p>{challenge.description}</p>
+                    <div className="progress-container">
+                      <div 
+                        className="progress-bar"
+                        style={{ width: `${(challenge.current / challenge.goal) * 100}%` }}
+                      >
+                        {Math.round((challenge.current / challenge.goal) * 100)}%
+                      </div>
+                    </div>
+                    <p>{challenge.current}/{challenge.goal} participants</p>
+                    <button className="join-button">Join Challenge</button>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div 
-              className="value-bar avg-value" 
-              style={{ width: `${(item.avg / maxValue) * 100}%` }}
-            >
-              <span>Avg: {item.avg}</span>
+          )}
+
+          {homeownerSubView === 'survey' && (
+            <Survey />
+          )}
+
+          {homeownerSubView === 'map' && (
+            <div className="community-section">
+              <h3>Neighborhood Energy Map</h3>
+              <NeighborhoodMap />
             </div>
-          </div>
-        </div>
-      );
-    })}
-  </div>
-</div>
+          )}
         </>
       ) : (
         <div className="maintenance-view">

@@ -1,0 +1,98 @@
+/* NeighborhoodMap.css */
+.map-container {
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #eee;
+  }
+  
+  .custom-marker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: rgba(46, 125, 50, 0.7);
+    border: 2px solid white;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .custom-marker:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    z-index: 1000;
+  }
+  
+  .marker-content {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  
+  .marker-content.your-home {
+    background: var(--primary);
+  }
+  
+  .map-popup {
+    min-width: 180px;
+  }
+  
+  .map-popup h4 {
+    margin-bottom: 10px;
+    color: var(--primary);
+  }
+  
+  .map-popup p {
+    margin: 5px 0;
+  }
+  
+  .map-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .legend-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  
+  .legend-icon.small {
+    width: 15px;
+    height: 15px;
+    background: rgba(46, 125, 50, 0.5);
+  }
+  
+  .legend-icon.medium {
+    width: 20px;
+    height: 20px;
+    background: rgba(46, 125, 50, 0.7);
+  }
+  
+  .legend-icon.large {
+    width: 25px;
+    height: 25px;
+    background: rgba(46, 125, 50, 0.9);
+  }
+  
+  .legend-icon.your-home {
+    background: var(--primary);
+  }
