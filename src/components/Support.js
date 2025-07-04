@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import './Support.css';
 
-const Support = () => {
+const Support = ({ toggleAssistant, notifications }) => {
   const faqs = [
     {
       question: 'How are energy credits calculated?',
@@ -44,10 +44,33 @@ const Support = () => {
     setExpanded(expanded === index ? null : index);
   };
 
+  const downloadResource = (name) => {
+    const content = `This is a placeholder for the ${name} document.`;
+    const blob = new Blob([content], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${name.replace(/\s+/g, '_')}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
+
+    const notificationMessage = `Downloaded resource: ${name}`;
+    const alreadyExists = notifications?.some(n => n.message === notificationMessage);
+    if (!alreadyExists) {
+      toggleAssistant?.(); // Optional: trigger AI Assistant after download
+    }
+  };
+
   return (
     <div className="support-container">
       <h2>Support Center</h2>
-      
+
       <div className="support-tabs">
         <button 
           className={`tab ${activeTab === 'faq' ? 'active' : ''}`}
@@ -100,7 +123,12 @@ const Support = () => {
               <div key={i} className="resource-card">
                 <div className="resource-icon">{res.icon}</div>
                 <div className="resource-name">{res.name}</div>
-                <button className="download-button">Download</button>
+                <button 
+                  className="download-button"
+                  onClick={() => downloadResource(res.name)}
+                >
+                  Download
+                </button>
               </div>
             ))}
           </div>
@@ -147,7 +175,12 @@ const Support = () => {
               <div className="contact-icon">💬</div>
               <h4>AI Assistant</h4>
               <p>Instant answers to common questions</p>
-              <button className="chat-button">Start Chat</button>
+              <button 
+                className="chat-button"
+                onClick={toggleAssistant}
+              >
+                Start Chat
+              </button>
             </div>
           </div>
           <div className="hours-info">

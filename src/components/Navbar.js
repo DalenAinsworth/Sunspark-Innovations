@@ -1,8 +1,12 @@
 // src/components/Navbar.js
-import React from 'react';
+import React, { useState } from 'react';
 import './Navbar.css';
 
-const Navbar = ({ currentView, setCurrentView, toggleAssistant }) => {
+const Navbar = ({ currentView, setCurrentView, toggleAssistant, notifications, markAsRead, markAllAsRead }) => {
+  const [showNotifications, setShowNotifications] = useState(false);
+  
+  const unreadCount = notifications.filter(n => !n.read).length;
+
   return (
     <nav className="navbar">
       <div className="navbar-brand">
@@ -33,16 +37,59 @@ const Navbar = ({ currentView, setCurrentView, toggleAssistant }) => {
           <span>🛠️</span> Support
         </button>
         <button 
-  className={`nav-link ${currentView === 'about' ? 'active' : ''}`}
-  onClick={() => setCurrentView('about')}
->
-  <span>ℹ️</span> About Us
-</button>
-      </div>
-      <div className="ai-assistant">
-        <button className="ai-button" onClick={toggleAssistant}>
-          <span>🤖</span> Ask AI Assistant
+          className={`nav-link ${currentView === 'about' ? 'active' : ''}`}
+          onClick={() => setCurrentView('about')}
+        >
+          <span>ℹ️</span> About Us
         </button>
+      </div>
+      
+      <div className="navbar-actions">
+        <div className="notification-container">
+          <button 
+            className="notification-button"
+            onClick={() => setShowNotifications(!showNotifications)}
+          >
+            <span>🔔</span>
+            {unreadCount > 0 && (
+              <span className="notification-badge">{unreadCount}</span>
+            )}
+          </button>
+          
+          {showNotifications && (
+            <div className="notification-dropdown">
+              <div className="notification-header">
+                <h4>Notifications</h4>
+                <button onClick={markAllAsRead}>Mark all as read</button>
+              </div>
+              
+              {notifications.length === 0 ? (
+                <div className="notification-item empty">
+                  No notifications
+                </div>
+              ) : (
+                <div className="notification-list">
+                  {notifications.map(notification => (
+                    <div 
+                      key={notification.id} 
+                      className={`notification-item ${notification.read ? 'read' : 'unread'}`}
+                      onClick={() => markAsRead(notification.id)}
+                    >
+                      <div className="notification-message">{notification.message}</div>
+                      <div className="notification-time">{notification.timestamp}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        
+        <div className="ai-assistant">
+          <button className="ai-button" onClick={toggleAssistant}>
+            <span>🤖</span> Ask AI Assistant
+          </button>
+        </div>
       </div>
     </nav>
   );

@@ -1,9 +1,9 @@
-/* Dashboard.js */
+// Dashboard.js
 import React, { useState, useEffect } from 'react';
 import EnergyGraph from './EnergyGraph';
 import './Dashboard.css';
 
-const Dashboard = () => {
+const Dashboard = ({ addNotification, notifications }) => {
   const [energyData, setEnergyData] = useState({
     production: 0,
     consumption: 0,
@@ -17,12 +17,10 @@ const Dashboard = () => {
   const [activeTip, setActiveTip] = useState(null);
   const [schedulingAlert, setSchedulingAlert] = useState(null);
   const [scheduleDateTime, setScheduleDateTime] = useState('');
-
-  // New state for coaching tip
   const [coachingTip, setCoachingTip] = useState(null);
 
   useEffect(() => {
-    // Initial energy data load simulation
+    // Simulate initial data load
     setTimeout(() => {
       setEnergyData({
         production: 5.2,
@@ -37,7 +35,7 @@ const Dashboard = () => {
           {
             id: 1,
             title: 'Shift laundry to noon when solar production peaks',
-            details: 'Running high-energy appliances during peak solar hours (10am-2pm) reduces grid dependence. This uses your free solar energy and may increase energy credits.',
+            details: 'Running high-energy appliances during peak solar hours (10am–2pm) reduces grid dependence. This uses your free solar energy and may increase energy credits.',
             link: '/tips/load-shifting'
           },
           {
@@ -49,7 +47,7 @@ const Dashboard = () => {
           {
             id: 3,
             title: 'Adjust panel angle for better winter sun exposure',
-            details: 'In winter, the sun is lower in the sky. Adjusting your panel tilt angle to be steeper (around your latitude +15 degrees) can capture more sunlight and increase winter production.',
+            details: 'In winter, the sun is lower in the sky. Adjusting your panel tilt angle to be steeper (around your latitude +15°) can capture more sunlight and increase winter production.',
             link: '/tips/panel-angle'
           },
           {
@@ -62,7 +60,6 @@ const Dashboard = () => {
       });
     }, 500);
 
-    // Add personalized coaching tip after initial load
     setTimeout(() => {
       const personalizedTip = {
         id: 5,
@@ -98,7 +95,14 @@ const Dashboard = () => {
 
   const confirmSchedule = () => {
     if (schedulingAlert && scheduleDateTime) {
-      alert(`Scheduled "${schedulingAlert.text}" for ${new Date(scheduleDateTime).toLocaleString()}`);
+      const formattedDate = new Date(scheduleDateTime).toLocaleString();
+      const message = `Maintenance scheduled: "${schedulingAlert.text}" for ${formattedDate}`;
+      
+      if (addNotification) {
+        addNotification(message);
+      }
+
+      alert(`Scheduled "${schedulingAlert.text}" for ${formattedDate}`);
       setSchedulingAlert(null);
     }
   };
@@ -108,48 +112,29 @@ const Dashboard = () => {
       <h2>Solar Energy Dashboard</h2>
 
       <div className="stats-grid">
-        <div 
-          className={`stat-card production ${activeGraph === 'production' ? 'active' : ''}`}
-          onClick={() => handleStatClick('production')}
-        >
-          <h3>Production</h3>
-          <p className="stat-value">{energyData.production} kWh</p>
-          <p className="stat-label">Today's generation</p>
-        </div>
-
-        <div 
-          className={`stat-card consumption ${activeGraph === 'consumption' ? 'active' : ''}`}
-          onClick={() => handleStatClick('consumption')}
-        >
-          <h3>Consumption</h3>
-          <p className="stat-value">{energyData.consumption} kWh</p>
-          <p className="stat-label">Energy used</p>
-        </div>
-
-        <div 
-          className={`stat-card excess ${activeGraph === 'excess' ? 'active' : ''}`}
-          onClick={() => handleStatClick('excess')}
-        >
-          <h3>Excess Energy</h3>
-          <p className="stat-value">{energyData.excess} kWh</p>
-          <p className="stat-label">Sent to grid</p>
-        </div>
-
-        <div 
-          className={`stat-card credits ${activeGraph === 'credits' ? 'active' : ''}`}
-          onClick={() => handleStatClick('credits')}
-        >
-          <h3>Energy Credits</h3>
-          <p className="stat-value">{energyData.credits} kWh</p>
-          <p className="stat-label">Available</p>
-        </div>
+        {['production', 'consumption', 'excess', 'credits'].map((type) => (
+          <div 
+            key={type}
+            className={`stat-card ${type} ${activeGraph === type ? 'active' : ''}`}
+            onClick={() => handleStatClick(type)}
+          >
+            <h3>{type.charAt(0).toUpperCase() + type.slice(1)}</h3>
+            <p className="stat-value">{energyData[type]} kWh</p>
+            <p className="stat-label">{{
+              production: "Today's generation",
+              consumption: "Energy used",
+              excess: "Sent to grid",
+              credits: "Available"
+            }[type]}</p>
+          </div>
+        ))}
       </div>
 
       {activeGraph && (
         <EnergyGraph 
           data={energyData} 
           type={activeGraph}
-          showPeakHours={true} // Show peak hour indicator
+          showPeakHours={true}
         />
       )}
 
@@ -160,10 +145,7 @@ const Dashboard = () => {
             <div key={alert.id} className="alert-item">
               <span className="alert-icon">⚠️</span>
               <span className="alert-text">{alert.text}</span>
-              <button 
-                className="action-button"
-                onClick={() => handleSchedule(alert)}
-              >
+              <button className="action-button" onClick={() => handleSchedule(alert)}>
                 Schedule
               </button>
             </div>
@@ -181,10 +163,7 @@ const Dashboard = () => {
             <div key={tip.id} className="tip-card">
               <span className="tip-icon">💡</span>
               <p>{tip.title}</p>
-              <button 
-                className="info-button"
-                onClick={() => handleLearnMore(tip)}
-              >
+              <button className="info-button" onClick={() => handleLearnMore(tip)}>
                 Learn more
               </button>
             </div>
@@ -192,7 +171,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Optional: show personalized coaching tip separately */}
       {coachingTip && (
         <div className="personalized-tip dashboard-section">
           <h3>{coachingTip.title}</h3>
@@ -218,13 +196,16 @@ const Dashboard = () => {
                   className="action-button"
                   target="_blank" 
                   rel="noopener noreferrer"
+                  onClick={(e) => {
+                    if (!activeTip.link || activeTip.link === '#') {
+                      e.preventDefault();
+                      alert('This feature is coming soon!');
+                    }
+                  }}
                 >
                   View Full Details
                 </a>
-                <button 
-                  className="info-button"
-                  onClick={() => setActiveTip(null)}
-                >
+                <button className="info-button" onClick={() => setActiveTip(null)}>
                   Close
                 </button>
               </div>
@@ -256,16 +237,10 @@ const Dashboard = () => {
               </div>
 
               <div className="modal-actions">
-                <button 
-                  className="action-button"
-                  onClick={confirmSchedule}
-                >
+                <button className="action-button" onClick={confirmSchedule}>
                   Confirm Schedule
                 </button>
-                <button 
-                  className="info-button"
-                  onClick={() => setSchedulingAlert(null)}
-                >
+                <button className="info-button" onClick={() => setSchedulingAlert(null)}>
                   Cancel
                 </button>
               </div>

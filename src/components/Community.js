@@ -2,17 +2,18 @@
 import React, { useState } from 'react';
 import './Community.css';
 
-import Survey from './Survey';           // New component
-import NeighborhoodMap from './NeighborhoodMap'; // New component
+import Survey from './Survey';
+import NeighborhoodMap from './NeighborhoodMap';
+import ChallengeQuoteModal from './ChallengeQuoteModal'; // NEW
 
-const Community = () => {
-  // Role selector at top
+const Community = ({ addNotification }) => {
   const [userRole, setUserRole] = useState('homeowner');
-
-  // Homeowner subview selector
   const [homeownerSubView, setHomeownerSubView] = useState('dashboard');
 
-  // Static community data
+  // Modal state
+  const [showQuoteModal, setShowQuoteModal] = useState(false);
+  const [selectedChallenge, setSelectedChallenge] = useState(null);
+
   const communityData = {
     totalEnergy: 2450,
     totalConsumption: 1820,
@@ -30,11 +31,19 @@ const Community = () => {
     ]
   };
 
-  // New challenge data
   const challenges = [
     { id: 1, name: 'Energy Saver Week', goal: 100, current: 75, description: 'Reduce your energy consumption by 10% this week' },
     { id: 2, name: 'Solar Champion', goal: 50, current: 30, description: 'Produce 50 kWh of solar energy' },
   ];
+
+  const handleJoinChallenge = (challenge) => {
+    setSelectedChallenge(challenge);
+    setShowQuoteModal(true);
+
+    if (addNotification) {
+      addNotification(`You joined the challenge: ${challenge.name}`);
+    }
+  };
 
   return (
     <div className="community-container">
@@ -45,7 +54,6 @@ const Community = () => {
         </p>
       </div>
 
-      {/* Role Selector */}
       <div className="role-selector">
         <button 
           className={userRole === 'homeowner' ? 'active' : ''}
@@ -80,7 +88,6 @@ const Community = () => {
 
       {userRole === 'homeowner' ? (
         <>
-          {/* Subview Selector for Homeowners */}
           <div className="subview-selector">
             <button 
               className={homeownerSubView === 'dashboard' ? 'active' : ''}
@@ -108,7 +115,6 @@ const Community = () => {
             </button>
           </div>
 
-          {/* Subview Content */}
           {homeownerSubView === 'dashboard' && (
             <>
               <div className="community-section">
@@ -178,7 +184,12 @@ const Community = () => {
                       </div>
                     </div>
                     <p>{challenge.current}/{challenge.goal} participants</p>
-                    <button className="join-button">Join Challenge</button>
+                    <button 
+                      className="join-button"
+                      onClick={() => handleJoinChallenge(challenge)}
+                    >
+                      Join Challenge
+                    </button>
                   </div>
                 ))}
               </div>
@@ -194,6 +205,13 @@ const Community = () => {
               <h3>Neighborhood Energy Map</h3>
               <NeighborhoodMap />
             </div>
+          )}
+
+          {showQuoteModal && selectedChallenge && (
+            <ChallengeQuoteModal 
+              challenge={selectedChallenge}
+              onClose={() => setShowQuoteModal(false)}
+            />
           )}
         </>
       ) : (
