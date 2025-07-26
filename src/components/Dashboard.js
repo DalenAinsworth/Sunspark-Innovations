@@ -19,14 +19,28 @@ const Dashboard = ({ addNotification, notifications }) => {
   const [scheduleDateTime, setScheduleDateTime] = useState('');
   const [coachingTip, setCoachingTip] = useState(null);
 
+  // Rate Constants (Ameren Missouri, Summer 2025)
+  const SUMMER_RATE = 0.0539; // $/kWh
+  const WINTER_RATE = 0.0392; // Optional: seasonal switch
+  const getNetMeterRate = () => {
+    const currentMonth = new Date().getMonth() + 1;
+    return (currentMonth >= 6 && currentMonth <= 9) ? SUMMER_RATE : WINTER_RATE;
+  };
+
   useEffect(() => {
-    // Simulate initial data load
+    // Simulate initial solar data
+    const simulatedProduction = 5.2;
+    const simulatedConsumption = 3.8;
+    const simulatedExcess = +(simulatedProduction - simulatedConsumption).toFixed(2);
+    const netRate = getNetMeterRate();
+    const calculatedCredits = +(simulatedExcess * netRate).toFixed(2);
+
     setTimeout(() => {
       setEnergyData({
-        production: 5.2,
-        consumption: 3.8,
-        excess: 1.4,
-        credits: 1.4,
+        production: simulatedProduction,
+        consumption: simulatedConsumption,
+        excess: simulatedExcess,
+        credits: calculatedCredits,
         alerts: [
           { id: 1, text: 'Panel #4 efficiency reduced by 12%' },
           { id: 2, text: 'Monthly maintenance due in 3 days' }
@@ -60,6 +74,7 @@ const Dashboard = ({ addNotification, notifications }) => {
       });
     }, 500);
 
+    // Add personalized tip later
     setTimeout(() => {
       const personalizedTip = {
         id: 5,
@@ -119,12 +134,16 @@ const Dashboard = ({ addNotification, notifications }) => {
             onClick={() => handleStatClick(type)}
           >
             <h3>{type.charAt(0).toUpperCase() + type.slice(1)}</h3>
-            <p className="stat-value">{energyData[type]} kWh</p>
+            <p className="stat-value">
+              {type === 'credits' 
+                ? `$${energyData[type]}` 
+                : `${energyData[type]} kWh`}
+            </p>
             <p className="stat-label">{{
               production: "Today's generation",
               consumption: "Energy used",
               excess: "Sent to grid",
-              credits: "Available"
+              credits: "Estimated credit"
             }[type]}</p>
           </div>
         ))}
