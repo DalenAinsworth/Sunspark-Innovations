@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Sunspark-Innovations/static/css/main.ad10ab8b.css",
-    "main.js": "/Sunspark-Innovations/static/js/main.e8820846.js",
+    "main.css": "/Sunspark-Innovations/static/css/main.cbfb9f2b.css",
+    "main.js": "/Sunspark-Innovations/static/js/main.0600cc99.js",
     "static/js/453.7201a261.chunk.js": "/Sunspark-Innovations/static/js/453.7201a261.chunk.js",
     "index.html": "/Sunspark-Innovations/index.html",
-    "main.ad10ab8b.css.map": "/Sunspark-Innovations/static/css/main.ad10ab8b.css.map",
-    "main.e8820846.js.map": "/Sunspark-Innovations/static/js/main.e8820846.js.map",
+    "main.cbfb9f2b.css.map": "/Sunspark-Innovations/static/css/main.cbfb9f2b.css.map",
+    "main.0600cc99.js.map": "/Sunspark-Innovations/static/js/main.0600cc99.js.map",
     "453.7201a261.chunk.js.map": "/Sunspark-Innovations/static/js/453.7201a261.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ad10ab8b.css",
-    "static/js/main.e8820846.js"
+    "static/css/main.cbfb9f2b.css",
+    "static/js/main.0600cc99.js"
   ]
 }
